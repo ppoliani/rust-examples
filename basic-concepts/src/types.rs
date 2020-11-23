@@ -14,6 +14,9 @@ fn _integers() {
 
   // byte integer literal
   let _x: u8 = b'A';
+
+  // The primary situation in which you’d use isize or usize is when indexing some sort of collection.
+  let _index: usize = 1;
 }
 
 fn _float() {

@@ -16,3 +16,9 @@ pub fn _closures() {
   let _closure = |i: i32| -> i32 { i + 10 };
   let _closure_inferred: fn(i32) -> i32 = |i| i + 10 ;
 }
+
+pub fn _func_type() -> fn() -> () {
+  // return a new function that accepts no parameters and executed a 
+  // statement i.e. doesn't return anything (empty tuple () in rust)
+  || -> () { println!("Hey there") }
+}
