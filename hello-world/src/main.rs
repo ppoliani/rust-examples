@@ -17,6 +17,7 @@ fn main() {
       .read_line(&mut guess)
       .expect("Failed to read line");
 
+    // shadow the variable declared above
     let guess: u32 = match guess.trim().parse() {
       Ok(num) => num,
       Err(_) => continue
