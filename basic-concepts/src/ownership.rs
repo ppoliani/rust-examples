@@ -64,11 +64,47 @@ pub fn _mutable_ref() {
 // But mutable references have one big restriction: you can have 
 // only one mutable reference to a particular piece of data in a 
 // particular scope. This code will fail:
-pub fn _cannot_borrow_twice() {
+pub fn _cannot_borrow_twice_within_the_same_scope() {
   let mut s1 = String::from("New value");
 
   let _s2 = &mut s1;
   let _s3 = &mut s1;
 
+  println!("{}, {}", _s2, _s3);
+
+  let mut s = String::from("hello");
+
+  {
+      let _r1 = &mut s;
+  } // r1 goes out of scope here, so we can make a new reference with no problems.
+
+  let _r2 = &mut s;
+}
+
+pub fn _borrow_as_immutable_and_then_as_mutable() {
+  let mut s1 = String::from("New value");
+
+  let _s2 = &s1;
+  let _s3 = &s1;
+  let _s4 = &mut s1;
+
+  println!("{}, {}, and {}", _s2, _s3, _s4);
+}
+
+// Note that a reference’s scope starts from where it is introduced 
+// and continues through the last time that reference is used.
+pub fn _reference_scope() {
+  let mut s1 = String::from("New value");
+
+  let _s2 = &s1;
+  let _s3 = &s1;
+
+  println!("{}, {}", _s2, _s3);
+
+  // no problem because _s2 and _s3 references went out of scope when they were last used above
+  let _s4 = &mut s1;
+  println!("{}", _s4);
+
+  // BUT if we use it again here then they're still in scope so the previous code will fail
   println!("{}, {}", _s2, _s3);
 }
