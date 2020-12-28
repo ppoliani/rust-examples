@@ -17,5 +17,5 @@ fn main() {
   // control_flow::_iterate_array_safe();
   // control_flow::_iterate_range();
 
-  slices::first_word(&String::from("The first word of the sentence is The"));
+  slices::first_word();
 }
