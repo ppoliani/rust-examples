@@ -51,3 +51,30 @@ pub fn create_user() {
   );
 }
 
+// This is a tuple struct. This is useful when we want to make a tuple a different type
+// from other typles and naming each field as in regular struct would be to verbose
+struct Point(i32, i32);
+
+pub fn tuple_struct() {
+  let p1 = Point(0, 0);
+}
+
+#[derive(Debug)]
+pub struct Rectangle {
+  width: u32,
+  height: u32
+}
+
+fn area(rect:&Rectangle) -> u32 {
+  rect.width * rect.height
+}
+
+
+pub fn rectangle_area() {
+  let rect = Rectangle { width: 10, height: 20 };
+  let sqm = |rect:&Rectangle| -> u32 {area(rect)};
+
+  // using :? tells println! to use an output format called Debug
+  // To enable it the Rectangle struct should derive the Debug trait
+  println!("The area is for the rectangle {:?} is {}", rect, sqm(&rect))
+}

@@ -19,5 +19,5 @@ fn main() {
   // control_flow::_iterate_range();
 
   // slices::first_word();
-  structs::create_user();
+  structs::rectangle_area();
 }
