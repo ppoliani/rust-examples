@@ -1,11 +1,11 @@
-pub fn _move_ownership() {
+fn move_ownership() {
   let s1 = String::from("New value");
   let _s2 = s1;
 
   println!("This will not work because ownership of the the heap area controlled by s1 moved to s2: {}", s1);
 }
 
-pub fn _clone() {
+fn clone() {
   let s1 = String::from("New value");
   let _s2 = s1.clone();
 
@@ -16,7 +16,7 @@ fn takes_ownership(s: String) {
   println!("Ownership from s1 below moved to s: {}", s)
 }
 
-pub fn _func_param_takes_ownership() {
+fn func_param_takes_ownership() {
   let s1 = String::from("New value");
   takes_ownership(s1);
   println!("This will not work because ownership of the the heap area controlled by s1 moved to s of takes_ownership: {}", s1);
@@ -27,7 +27,7 @@ fn returns_ownership() -> String {
   s1
 }
 
-pub fn _func_return_value_moves_ownership() {
+fn func_return_value_moves_ownership() {
   let s = returns_ownership();
   println!("This will  work because ownership of s1 from returns_ownership moves to _s: {}", s);
 }
@@ -37,13 +37,13 @@ fn calculate_length(s: &String) -> usize {
   s.len()
 }
 
-pub fn _ref_param() {
+fn ref_param() {
   let s1 = String::from("New value");
   let len = calculate_length(&s1);
 
   println!("The length is {}", len);
 
-  //This will work because we have have created a reference
+  // This will work because we have have created a reference
   // that points to s1 on the stack which in turns points to 
   // the occupied heap area that stores the string 
   println!("{}", s1);
@@ -56,7 +56,7 @@ fn change(str: &mut String) {
   str.push_str(", world");
 }
 
-pub fn _mutable_ref() {
+fn _mutable_ref() {
   let mut s1 = String::from("New value");
   change(&mut s1)
 }
@@ -64,7 +64,7 @@ pub fn _mutable_ref() {
 // But mutable references have one big restriction: you can have 
 // only one mutable reference to a particular piece of data in a 
 // particular scope. This code will fail:
-pub fn _cannot_borrow_twice_within_the_same_scope() {
+fn cannot_borrow_twice_within_the_same_scope() {
   let mut s1 = String::from("New value");
 
   let _s2 = &mut s1;
@@ -81,7 +81,7 @@ pub fn _cannot_borrow_twice_within_the_same_scope() {
   let _r2 = &mut s;
 }
 
-pub fn _borrow_as_immutable_and_then_as_mutable() {
+fn borrow_as_immutable_and_then_as_mutable() {
   let mut s1 = String::from("New value");
 
   let _s2 = &s1;
@@ -93,7 +93,7 @@ pub fn _borrow_as_immutable_and_then_as_mutable() {
 
 // Note that a reference’s scope starts from where it is introduced 
 // and continues through the last time that reference is used.
-pub fn _reference_scope() {
+fn reference_scope() {
   let mut s1 = String::from("New value");
 
   let _s2 = &s1;
@@ -107,4 +107,18 @@ pub fn _reference_scope() {
 
   // BUT if we use it again here then they're still in scope so the previous code will fail
   println!("{}, {}", _s2, _s3);
+}
+
+fn dangle() {
+  let s = _dangle_ref();
+}
+
+// Because is created in the scope of the dangle_ref function
+// when the function is executed it goes out of scope and thus it
+// will be dropped. However, there is a reference that we return which 
+// now point to an empty memory location. Rust will prevent this situation
+fn dangle_ref() -> &String {
+  let s = String::from("Some string");
+
+  &s
 }
