@@ -78,6 +78,11 @@ impl Rectangle {
   fn area(&self) -> u32 {
     self.width * self.height
   }
+
+  fn equals(&self, other:&Rectangle) -> bool {
+    self.width == other.width
+      && self.height == other.height
+  }
 }
 
 fn area(rect:&Rectangle) -> u32 {
@@ -87,6 +92,7 @@ fn area(rect:&Rectangle) -> u32 {
 
 pub fn rectangle_area() {
   let rect = Rectangle { width: 10, height: 20 };
+  let rect2 = Rectangle { width: 20, height: 20 };
   let sqm = |rect:&Rectangle| -> u32 {area(rect)};
 
   // using :? tells println! to use an output format called Debug
@@ -94,5 +100,7 @@ pub fn rectangle_area() {
   println!("The area for the rectangle {:?} is {}", rect, sqm(&rect));
 
   // use a method on the struct instead of an external function
-  println!("The area using a method for the rectangle {:?} is {}", rect, rect.area())
+  println!("The area using a method for the rectangle {:?} is {}", rect, rect.area());
+
+  println!("Is rect {:?} equal to {:?} -> {}", rect, rect2, rect.equals(&rect2));
 }
