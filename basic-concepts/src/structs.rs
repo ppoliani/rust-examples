@@ -65,6 +65,21 @@ pub struct Rectangle {
   height: u32
 }
 
+
+// Add methods to the struct
+impl Rectangle {
+  // Methods can
+  // 1. take ownership of self i.e self
+  // 2. borrow self immutable i.e. &self
+  // 3. borrow self mutably i.e. &mut self
+  // Having a method that takes ownership of instance by using just self is rate.
+  // This is usually used when the method transforms self into something else and you want to 
+  // prevent the caller from using the original instance after the transformation
+  fn area(&self) -> u32 {
+    self.width * self.height
+  }
+}
+
 fn area(rect:&Rectangle) -> u32 {
   rect.width * rect.height
 }
@@ -76,5 +91,8 @@ pub fn rectangle_area() {
 
   // using :? tells println! to use an output format called Debug
   // To enable it the Rectangle struct should derive the Debug trait
-  println!("The area is for the rectangle {:?} is {}", rect, sqm(&rect))
+  println!("The area for the rectangle {:?} is {}", rect, sqm(&rect));
+
+  // use a method on the struct instead of an external function
+  println!("The area using a method for the rectangle {:?} is {}", rect, rect.area())
 }
