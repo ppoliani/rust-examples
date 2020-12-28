@@ -68,6 +68,13 @@ pub struct Rectangle {
 
 // Add methods to the struct
 impl Rectangle {
+  // An associated function rather that a method that has access to the
+  // the instance. Usually used as a static function associated with the 
+  // the struct or as a constructor i.e. String::from
+  fn create(width:u32, height:u32) -> Rectangle {
+    Rectangle {width, height}
+  }
+
   // Methods can
   // 1. take ownership of self i.e self
   // 2. borrow self immutable i.e. &self
@@ -103,4 +110,6 @@ pub fn rectangle_area() {
   println!("The area using a method for the rectangle {:?} is {}", rect, rect.area());
 
   println!("Is rect {:?} equal to {:?} -> {}", rect, rect2, rect.equals(&rect2));
+
+  println!("A associated function creating new rectangle {:?}", Rectangle::create(10, 30));
 }
